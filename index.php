@@ -15,7 +15,7 @@ while (!$words->eof()) {
 	$result = $parser->parse(trim($word));
 	$insertOneResult = $wordsCollection->insertOne($result);
 
-	echo $insertOneResult->getInsertedId() . "\n";
+	echo $word;
 }
 
 $words = null;
