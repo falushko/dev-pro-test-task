@@ -12,7 +12,7 @@ use PHPHtmlParser\Dom;
  */
 class Parser
 {
-	private $website;
+	private $httpClient;
 	private $httpOptions = [
 		'headers' => [
 			'User-Agent' => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13',
@@ -21,7 +21,7 @@ class Parser
 
 	public function __construct(string $website)
 	{
-		$this->website = $website;
+		$this->httpClient = new HttpClient(['base_uri' => $website]);
 	}
 
 	/**
@@ -31,8 +31,7 @@ class Parser
 	 */
 	public function parse(string $word) : array
 	{
-		$client = new HttpClient(['base_uri' => $this->website]);
-		$html = (string) $client->get($word, $this->httpOptions)->getBody();
+		$html = (string) $this->httpClient->get($word, $this->httpOptions)->getBody();
 
 		$dom = new Dom;
 		$dom->load($html);
